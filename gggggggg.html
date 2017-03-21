@@ -1,0 +1,206 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="Keywords" content="blog"/>
+    <meta name="Description" content="blog"/>
+    <title>Simple</title>
+    <link rel="shortcut icon" href="/static/favicon.png"/>
+    <link rel="stylesheet" type="text/css" href="/main.css" />
+</head>
+<body>
+<div class="main">
+    <div class="header">
+    	<ul id="pages">
+            <li><a href="/">home</a></li>
+            <li><a href="/#/tags">tags</a></li>
+            <li><a href="/#/archive">archive</a></li>
+    	</ul>
+    </div>
+	<div class="wrap-header">
+	<h1>
+    <a href="/" id="title"></a>
+	</h1>
+	</div>
+<div id="md" style="display: none;">
+<!-- markdown -->
+#R语言课程第三节
+今天的知识点分为两部分（如果我没听错或者困得话），一个是学习如何在Rstudio里做PPT，虽然老师也觉得很丑，呵呵呵呵呵，另一个就是学习基本的数据结构，在小康老师的书附录里面可以找到。此外，今天的作业是要预习一下R里面常用数据处理包的使用，如dplyr，可见其书目53页。
+详情见[百度网盘](http://pan.baidu.com/s/1pKUZrkR)
+```
+                        **  PPT制作 **
+```
+
+打开Rstudio，新建R presentation文件，注意，黄色线分隔代表一页PPT，其他语言的使用通用为Markdown标记语言.按照自己想编辑的东西，preview即可，在右边的窗格显示。注意，若显示窗格里出现字体无法显示中文的问题，可在file里面选择reopen with encoding 然后选择
+UTF-8即可。个人觉得还是powerpoint好用，既美观又简洁......
+
+```
+                       **  数据结构 **
+```
+
+* vector
+
+一维数据，首先定义集合，用c表示。
+
+seq采用数列的方式
+> x <- seq (1,10,3) 
+
+ 分别是首项、末项、公差
+> y <- seq (from = 1, to = 10, by = 2)
+
+rep表示重复次数
+
+   区分time和each
+
+
+* martrix
+
+数据类型保持一致（逻辑，判断，字符）
+
+* dataframe
+
+要求长度相同
+
+* factor
+
+把字符转化为数值型
+
+* list
+
+
+
+
+
+<!-- markdown end -->
+</div>
+<div class="entry" id="main">
+<!-- content -->
+<h1 id="r">R语言课程第三节</h1>
+
+<p>今天的知识点分为两部分（如果我没听错或者困得话），一个是学习如何在Rstudio里做PPT，虽然老师也觉得很丑，呵呵呵呵呵，另一个就是学习基本的数据结构，在小康老师的书附录里面可以找到。此外，今天的作业是要预习一下R里面常用数据处理包的使用，如dplyr，可见其书目53页。
+详情见<a href="http://pan.baidu.com/s/1pKUZrkR">百度网盘</a></p>
+
+<pre><code>                        **  PPT制作 **
+</code></pre>
+
+<p>打开Rstudio，新建R presentation文件，注意，黄色线分隔代表一页PPT，其他语言的使用通用为Markdown标记语言.按照自己想编辑的东西，preview即可，在右边的窗格显示。注意，若显示窗格里出现字体无法显示中文的问题，可在file里面选择reopen with encoding 然后选择
+UTF-8即可。个人觉得还是powerpoint好用，既美观又简洁......</p>
+
+<pre><code>                       **  数据结构 **
+</code></pre>
+
+<ul>
+<li>vector</li>
+</ul>
+
+<p>一维数据，首先定义集合，用c表示。</p>
+
+<p>seq采用数列的方式</p>
+
+<blockquote>
+  <p>x &lt;- seq (1,10,3) </p>
+</blockquote>
+
+<p>分别是首项、末项、公差</p>
+
+<blockquote>
+  <p>y &lt;- seq (from = 1, to = 10, by = 2)</p>
+</blockquote>
+
+<p>rep表示重复次数</p>
+
+<p>区分time和each</p>
+
+<ul>
+<li>martrix</li>
+</ul>
+
+<p>数据类型保持一致（逻辑，判断，字符）</p>
+
+<ul>
+<li>dataframe</li>
+</ul>
+
+<p>要求长度相同</p>
+
+<ul>
+<li>factor</li>
+</ul>
+
+<p>把字符转化为数值型</p>
+
+<ul>
+<li>list</li>
+</ul>
+<!-- content end -->
+</div>
+<br>
+<br>
+    <div id="disqus_thread"></div>
+	<div class="footer">
+		<p>© Copyright 2014 by isnowfy, Designed by isnowfy</p>
+	</div>
+</div>
+<script src="main.js"></script>
+<script id="content" type="text/mustache">
+    <h1>{{title}}</h1>
+    <div class="tag">
+    {{date}}
+    {{#tags}}
+    <a href="/#/tag/{{name}}">#{{name}}</a>
+    {{/tags}}
+    </div>
+</script>
+<script id="pagesTemplate" type="text/mustache">
+    {{#pages}}
+    <li>
+        <a href="{{path}}">{{title}}</a>
+    </li>
+    {{/pages}}
+</script>
+<script>
+$(document).ready(function() {
+    $.ajax({
+        url: "main.json",
+        type: "GET",
+        dataType: "json",
+        success: function(data) {
+            $("#title").html(data.name);
+            var pagesTemplate = Hogan.compile($("#pagesTemplate").html());
+            var pagesHtml = pagesTemplate.render({"pages": data.pages});
+            $("#pages").append(pagesHtml);
+            //path
+            var path = "gggggggg.html";
+            //path end
+            var now = 0;
+            for (var i = 0; i < data.posts.length; ++i)
+                if (path == data.posts[i].path)
+                    now = i;
+            var post = data.posts[now];
+            var tmp = post.tags.split(" ");
+            var tags = [];
+            for (var i = 0; i < tmp.length; ++i)
+                if (tmp[i].length > 0)
+                    tags.push({"name": tmp[i]});
+            var contentTemplate = Hogan.compile($("#content").html());
+            var contentHtml = contentTemplate.render({"title": post.title, "tags": tags, "date": post.date});
+            $("#main").prepend(contentHtml);
+            if (data.disqus_shortname.length > 0) {
+                var disqus_shortname = data.disqus_shortname;
+                (function() {
+                    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                })();
+            }
+        }
+    });
+});
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ["\\(", "\\)"]], processEscapes: true}});
+</script>
+</body>
+</html>
